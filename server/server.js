@@ -24,7 +24,12 @@ const initServer = () => {
     app.post("/login", (req, res) => {
         console.log(req)
         dbLogin(dbConnection, req.body, (isSuccessful, id) => {
-            isSuccessful ? res.send(JSON.stringify({id})) : res.status(401).end()
+            if (isSuccessful) {
+                log(`${id} successful login.`)
+                return res.send(JSON.stringify({id}))
+            }
+            log(`Failed login.`)
+            res.status(401).end()
         })
     })
 
@@ -32,7 +37,11 @@ const initServer = () => {
         const {username, password} = req.body
         console.log(username, password)
         dbRegister(dbConnection, req.body, (isSuccessful) => {
-            isSuccessful ? res.status(200).end() : res.status(400).end()
+            if (isSuccessful) {
+                log(`New account created: ${username}`)
+                return res.status(200).end()
+            }
+            res.status(400).end()
         })
     })
 
