@@ -69,7 +69,14 @@ CREATE TABLE accounts (
 	password VARCHAR(72) UNIQUE NOT NULL
 )
 
+CREATE TABLE favorites (
+    id BIGSERIAL PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    movie_id BIGINT NOT NULL,
 
-
+    CONSTRAINT fk_user
+        FOREIGN KEY(user_id)
+            REFERENCES accounts(id)
+)
 
 */
