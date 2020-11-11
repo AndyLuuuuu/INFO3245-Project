@@ -47,19 +47,32 @@ const initServer = () => {
 
     app.get("/favorites", (req, res) => {
         dbSelectFav(dbConnection, req.body.userId, (isSuccessful, favs) => {
-            isSuccessful ? res.send(JSON.stringify(favs)) : res.status(401).end();
+            if (isSuccessful) {
+                log(`User ${req.body.userId} successfully retrieved favorites.`);
+                return res.send(JSON.stringify(favs));
+            } 
+            res.status(400).end();
         })
     })
 
     app.post("/favorites", (req, res) => {
+        const {userId, movieId} = req.body;
         dbInsertFav(dbConnection, req.body, (isSuccessful) => {
-            isSuccessful ? res.status(200).end() : res.status(400).end();
+            if (isSuccessful) {
+                log(`Movie ID ${movieId} was added as a favorite for user with ID ${userId}`);
+                return res.status(200).end();
+            } 
+            res.status(400).end();
         })
     })
 
     app.delete("/favorites/:id", (req, res) => {
         dbDeleteFav(dbConnection, req.params.id, (isSuccessful) => {
-            isSuccessful ? res.status(200).end() : res.status(400).end();
+            if (isSuccessful) {
+                log(`Deleted favorites with id ${req.params.id}`);
+                return res.status(200).end();
+            } 
+            res.status(400).end();
         })
     })
 
