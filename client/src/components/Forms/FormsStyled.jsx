@@ -13,6 +13,7 @@ export const Input = styled.TextInput`
     border: 1px solid rgba(0,0,0,0.3);
     border-radius: 10px;
     margin: 10px 0;
+    padding: 0 10px;
     background-color: white;
 `
 

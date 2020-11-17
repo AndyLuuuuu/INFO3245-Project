@@ -23,10 +23,10 @@ const initServer = () => {
 
     app.post("/login", (req, res) => {
         console.log(req)
-        dbLogin(dbConnection, req.body, (isSuccessful, id) => {
+        dbLogin(dbConnection, req.body, (isSuccessful, id, username) => {
             if (isSuccessful) {
                 log(`${id} successful login.`)
-                return res.send(JSON.stringify({id}))
+                return res.send(JSON.stringify({id, username}))
             }
             log(`Failed login.`)
             res.status(401).end()

@@ -52,7 +52,7 @@ const dbLogin = (db, userdata, callback) => {
         }
         if (res.rows.length) {
             bcrypt.compare(password, res.rows[0]['password']).then(pass => {
-                pass ? callback(pass, res.rows[0]['id']) : callback(false, null)
+                pass ? callback(pass, res.rows[0]['id'], username) : callback(false, null, null)
             })
         }
     })
