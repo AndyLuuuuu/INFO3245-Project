@@ -1,27 +1,9 @@
-import React, { useContext, useState } from 'react'
-import axios from 'axios'
-import Constants from 'expo-constants';
+import React, { useState } from 'react'
 import { Container, Input, Button, ButtonText } from './FormsStyled'
-import { UserContext } from '../../data/UserContext';
 
 export default function Inputs(props) {
-    const user = useContext(UserContext);
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
-    const handleSubmit = () => {
-        axios.post(`${Constants.manifest.extra.apiUrl}/login`, {
-            username,
-            password
-        }).then(res => {
-            user.setUserId(res.data.id);
-            user.setUsername(res.data.username);
-            props.navigation.navigate('ViewDrawer', { screen: 'Favorites' });
-        }).catch(err => {
-            console.log(err);
-        });
-    }
 
     return (
         <Container>
@@ -34,8 +16,11 @@ export default function Inputs(props) {
                 onChangeText={text => setPassword(text)} 
                 secureTextEntry
             />
-            <Button onPress={() => handleSubmit()}>
-                <ButtonText>LOGIN</ButtonText>
+            <Button onPress={() => props.onSubmit(username, password)}>
+                <ButtonText>{props.submitBtnText}</ButtonText>
+            </Button>
+            <Button onPress={() => props.onAltAction()}>
+                <ButtonText>{props.altBtnText}</ButtonText>
             </Button>
         </Container>
     )

@@ -23,7 +23,7 @@ export default function App() {
 
         <AccountStack.Navigator>
           <AccountStack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
-          {/* <AccountStack.Screen name="Register" component={RegisterScreen} /> */}
+          <AccountStack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}} />
           <AccountStack.Screen name="ViewDrawer" component={ViewDrawer} options={{headerShown: false}} />
         </AccountStack.Navigator>
 
