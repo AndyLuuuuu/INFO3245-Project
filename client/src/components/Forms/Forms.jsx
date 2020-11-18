@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import config from '../../data/config';
+import Constants from 'expo-constants';
 import { Container, Input, Button, ButtonText } from './FormsStyled'
 import { UserContext } from '../../data/UserContext';
 
@@ -11,7 +11,7 @@ export default function Inputs(props) {
     const [password, setPassword] = useState('');
 
     const handleSubmit = () => {
-        axios.post(`${config.url}/login`, {
+        axios.post(`${Constants.manifest.extra.apiUrl}/login`, {
             username,
             password
         }).then(res => {
