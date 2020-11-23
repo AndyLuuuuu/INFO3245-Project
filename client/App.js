@@ -1,35 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { UserProvider } from './src/data/UserContext'
 
 import LoginScreen from './src/views/Login/Login'
 import RegisterScreen from './src/views/Register/Register'
 
-import { ViewDrawer } from './src/navigation/ViewDrawer'
+import MainTabs from './src/navigation/MainTabs'
 
-const AccountStack = createStackNavigator()
+const MainStack = createStackNavigator()
 
 
 
 export default function App() {
+
+  const [user, setUser] = useState(1)
+
+  const [favorites, setFavorites] = useState([])
+
   return (
-    <UserProvider>
       <NavigationContainer>
-
-        <AccountStack.Navigator>
-          <AccountStack.Screen name="Login" component={LoginScreen} options={{headerShown: false}} />
-          <AccountStack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}} />
-          <AccountStack.Screen name="ViewDrawer" component={ViewDrawer} options={{headerShown: false}} />
-        </AccountStack.Navigator>
-
-
-
+        <MainStack.Navigator>
+          {user ? 
+            <MainStack.Screen name="Main" component={MainTabs} options={{headerShown: false}}/>
+            : 
+            <>
+            <MainStack.Screen name="Login" children={() => <LoginScreen setUser={setUser}/>} options={{headerShown: false}}/>
+            <MainStack.Screen name="Register" component={RegisterScreen} options={{headerShown: false}}/>
+            </>
+          }
+        </MainStack.Navigator>
       </NavigationContainer>
-    </UserProvider>
   );
 }

@@ -22,7 +22,6 @@ const initServer = () => {
     app.use(bodyParser.json())
 
     app.post("/login", (req, res) => {
-        console.log(req)
         dbLogin(dbConnection, req.body, (isSuccessful, id, username) => {
             if (isSuccessful) {
                 log(`${id} successful login.`)

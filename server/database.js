@@ -64,19 +64,22 @@ module.exports = {dbConnect, dbRegister, dbLogin}
 /* POSTGRESQL CREATE TABLES
 
 CREATE TABLE accounts (
-	id VARCHAR(36) PRIMARY KEY,
-	username VARCHAR(20) UNIQUE NOT NULL,
-	password VARCHAR(72) UNIQUE NOT NULL
-)
+	id TEXT PRIMARY KEY,
+	username TEXT UNIQUE NOT NULL,
+	password TEXT UNIQUE NOT NULL
+);
 
 CREATE TABLE favorites (
     id BIGSERIAL PRIMARY KEY,
-    user_id VARCHAR(36) NOT NULL,
+    user_id TEXT NOT NULL,
     movie_id BIGINT NOT NULL,
+    movie_name TEXT,
+    poster_url TEXT,
 
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
             REFERENCES accounts(id)
-)
+            ON DELETE CASCADE
+);
 
 */
