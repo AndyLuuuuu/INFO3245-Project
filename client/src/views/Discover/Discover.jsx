@@ -4,21 +4,9 @@ import Constants from 'expo-constants';
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, SafeAreaView, VirtualizedList, Image, Dimensions, TouchableOpacity } from 'react-native'
+import ListItem from '../../components/ListItem/ListItem'
 
-const ListItem = ({data, goTo}) => {
-    const {width, height} = Dimensions.get('window')
-
-    return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', height: height - 49}}>
-            <TouchableOpacity style={{flex: 1}} activeOpacity={0.9} onPress={() => goTo(data)}>
-                <Image style={{width, height, position: 'relative'}} resizeMode="cover" source={{uri: `https://image.tmdb.org/t/p/w500${data.backdrop_path}`}} blurRadius={2}/>
-                <Image style={{width: width - 20, height: height - 50, position: 'absolute', top: -24.5, left: 10 }} resizeMode="contain" source={{uri: `https://image.tmdb.org/t/p/w500${data.poster_path}`}}/>
-            </TouchableOpacity>
-        </View>
-    )
-}
-
-export default function Discover({type}) {
+export default function Discover({type, favorites, fetchFavorites, userId}) {
     const [list, setList] = useState([])
     const navigation = useNavigation()
     useEffect(() => {
@@ -47,14 +35,13 @@ export default function Discover({type}) {
         <SafeAreaView style={{flex: 1, marginTop: Constants.statusBarHeight}}>
            {list.length ? <VirtualizedList 
                 data={list} 
-                initialNumToRender={10} 
-                renderItem={({item}) => <ListItem data={item} goTo={openDetails}/>}
-                keyExtractor={item => item.id}
+                initialNumToRender={1} 
+                renderItem={({item}) => <ListItem data={item} goTo={openDetails} userId={userId} favorites={favorites} fetchFavorites={fetchFavorites}/>}
+                keyExtractor={item => item.id.toString()}
                 getItemCount={getItemCount}
                 getItem={getItem}
                 horizontal={true}
             /> : null}
-            {/* <Text>Discover {type.toUpperCase()}</Text> */}
         </SafeAreaView>
     )
 }

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Constants from 'expo-constants';
+import axios from 'axios'
 import FavoritesScreen from '../views/Favorites/Favorites';
 import DiscoverScreen from '../views/Discover/Discover'
 import SearchScreen from '../views/Search/Search'
@@ -11,7 +13,24 @@ import { MaterialIcons } from '@expo/vector-icons';
 const MainStack = createStackNavigator()
 const MainTabs = createBottomTabNavigator()
 
-const Tabs = () => {
+const Tabs = ({user}) => {
+    useEffect(() => {
+        fetchFavorites()
+    }, [])
+
+    const [favorites, setFavorites] = useState([])
+    const userId = user.userId
+
+    const fetchFavorites = () => {
+        axios.post(`${Constants.manifest.extra.apiUrl}/favorites`, {
+            userId: user.userId,
+        }).then(res => {
+            setFavorites(res.data)
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
    return (
     <MainTabs.Navigator
         screenOptions={({ route }) => ({
@@ -42,18 +61,19 @@ const Tabs = () => {
             inactiveTintColor: 'gray',
         }}
         >
-        <MainTabs.Screen name="Favorites" component={FavoritesScreen}/>
-        <MainTabs.Screen name="Discover TV" children={() => <DiscoverScreen type="tv"/>}/>
-        <MainTabs.Screen name="Discover Movies" children={() => <DiscoverScreen type="movie"/>}/>
-        <MainTabs.Screen name="Search" component={SearchScreen}/>
+        <MainTabs.Screen name="Favorites" children={() => <FavoritesScreen favorites={favorites} fetchFavorites={fetchFavorites}/> }/>
+        <MainTabs.Screen name="Discover TV" children={() => <DiscoverScreen type="tv" favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/>}/>
+        <MainTabs.Screen name="Discover Movies" children={() => <DiscoverScreen type="movie" favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/> }/>
+        <MainTabs.Screen name="Search" children={() => <SearchScreen favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/>}/>
     </MainTabs.Navigator>
    )
 }
 
-export default () => {
+export default ({user}) => {
+    console.log("BEFORE MAIN", user)
     return (
         <MainStack.Navigator>
-            <MainStack.Screen name="MainTabs" component={Tabs} options={{headerShown: false}}/>
+            <MainStack.Screen name="MainTabs" children={() => <Tabs user={user}/>} options={{headerShown: false}}/>
             <MainStack.Screen name="Details" component={DetailScreen} options={{title: ""}}/>
         </MainStack.Navigator>
     )

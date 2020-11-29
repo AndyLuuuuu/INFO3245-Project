@@ -14,7 +14,7 @@ const MainStack = createStackNavigator()
 
 export default function App() {
 
-  const [user, setUser] = useState(1)
+  const [user, setUser] = useState(null)
 
   const [favorites, setFavorites] = useState([])
 
@@ -22,7 +22,7 @@ export default function App() {
       <NavigationContainer>
         <MainStack.Navigator>
           {user ? 
-            <MainStack.Screen name="Main" component={MainTabs} options={{headerShown: false}}/>
+            <MainStack.Screen name="Main" children={() => <MainTabs user={user}/>} options={{headerShown: false}}/>
             : 
             <>
             <MainStack.Screen name="Login" children={() => <LoginScreen setUser={setUser}/>} options={{headerShown: false}}/>

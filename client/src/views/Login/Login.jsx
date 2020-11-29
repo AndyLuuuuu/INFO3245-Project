@@ -23,10 +23,12 @@ export default function Login(props) {
             username,
             password
         }).then(res => {
+            console.log(res)
             props.setUser({
                 userId: res.data.id,
                 username: res.data.username
             })
+            navigation.navigate("Main", {userId: res.data.id})
         }).catch(err => {
             console.log(err);
         });
