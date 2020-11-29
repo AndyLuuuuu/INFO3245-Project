@@ -31,3 +31,10 @@ export const FavoriteTitle = styled.Text`
     font-size: 14px;
     font-weight: 700;
 `
+
+export const NoFavoritesText= styled.Text`
+    flex: 1;
+    text-align: center;
+    text-align-vertical: center;
+    font-size: 14px;
+`
