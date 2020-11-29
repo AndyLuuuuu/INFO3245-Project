@@ -25,11 +25,11 @@ export const PosterImage = styled.Image`
 
 export const Content = styled.ScrollView.attrs(() => ({
     contentContainerStyle: {
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: 20
     }
 }))`
     flex: 0.3;
-    padding: 20px;
 `
 
 export const Title = styled.Text`
