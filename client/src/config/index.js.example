@@ -1,0 +1,4 @@
+export default {
+    apiUrl: "http://your_ip:PORT",
+    apiKey: "your_TMDB_API_KEY_V3_AUTH_HERE"
+}

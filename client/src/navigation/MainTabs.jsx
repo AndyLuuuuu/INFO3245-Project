@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Constants from 'expo-constants';
+import config from '../config';
 import axios from 'axios'
 import FavoritesScreen from '../views/Favorites/Favorites';
 import DiscoverScreen from '../views/Discover/Discover'
@@ -22,7 +22,7 @@ const Tabs = ({user}) => {
     const userId = user.userId
 
     const fetchFavorites = () => {
-        axios.post(`${Constants.manifest.extra.apiUrl}/favorites`, {
+        axios.post(`${config.apiUrl}/favorites`, {
             userId: user.userId,
         }).then(res => {
             setFavorites(res.data)

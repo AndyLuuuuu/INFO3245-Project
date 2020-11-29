@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { Container, FavoriteItem, FavoriteImage, FavoriteDetails, FavoriteTitle } from './FavoritesStyled'
 import { SafeAreaView, FlatList, Dimensions, View } from 'react-native'
-import Constants from 'expo-constants';
 
 const Favorite = ({favorite}) => {
     console.log(favorite)
@@ -19,7 +18,7 @@ const Favorite = ({favorite}) => {
 export default function Favorites({favorites}) {
     console.log(favorites)
     return (
-        <SafeAreaView style={{flex: 1, marginTop: Constants.statusBarHeight}}>
+        <SafeAreaView style={{flex: 1}}>
             <FlatList
                 ItemSeparatorComponent={() => <View style={{height: 1, width: "100%", backgroundColor: "rgba(0,0,0,0.2)"}}/>}
                 data={favorites}

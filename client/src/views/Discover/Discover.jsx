@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 
-import Constants from 'expo-constants';
+import config from '../../config'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, SafeAreaView, VirtualizedList, Image, Dimensions, TouchableOpacity } from 'react-native'
@@ -14,7 +14,7 @@ export default function Discover({type, favorites, fetchFavorites, userId}) {
     }, [])
 
     const fetchData = () => {
-        axios.get(`https://api.themoviedb.org/3/discover/${type}?api_key=${Constants.manifest.extra.tmdbApiKey}&sort_by=popularity.desc&page=1`).then(res => {
+        axios.get(`https://api.themoviedb.org/3/discover/${type}?api_key=${config.apiKey}&sort_by=popularity.desc&page=1`).then(res => {
             setList(res.data.results)
         })
     }
@@ -32,7 +32,7 @@ export default function Discover({type, favorites, fetchFavorites, userId}) {
     }
 
     return (
-        <SafeAreaView style={{flex: 1, marginTop: Constants.statusBarHeight}}>
+        <SafeAreaView style={{flex: 1}}>
            {list.length ? <VirtualizedList 
                 data={list} 
                 initialNumToRender={1} 

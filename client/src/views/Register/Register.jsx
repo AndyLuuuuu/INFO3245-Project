@@ -2,11 +2,11 @@ import React from 'react'
 import { Container, Title } from './RegisterStyled'
 import Forms from '../../components/Forms/Forms'
 import axios from 'axios'
-import Constants from 'expo-constants';
+import config from '../../config'
 
 export default function Register(props) {
     const handleSubmit = (username, password) => {
-        axios.post(`${Constants.manifest.extra.apiUrl}/register`, {
+        axios.post(`${config.apiUrl}/register`, {
             username,
             password
         }).then(res => {

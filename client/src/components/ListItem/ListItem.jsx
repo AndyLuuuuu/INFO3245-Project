@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import { View, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native'
 import axios from 'axios'
-import Constants from 'expo-constants';
+import config from '../../config';
 import { MaterialIcons } from '@expo/vector-icons';
 
 export default ListItem = ({data, goTo, userId, favorites, fetchFavorites}) => {
@@ -12,7 +12,7 @@ export default ListItem = ({data, goTo, userId, favorites, fetchFavorites}) => {
     const {width, height} = Dimensions.get('window')
     const favorite = () => {
         if (liked) {
-            axios.post(`${Constants.manifest.extra.apiUrl}/deleteFavorites`, {
+            axios.post(`${config.apiUrl}/deleteFavorites`, {
                 userId, 
                 movieId: data.id ? data.id : ""
             }).then(res => {
@@ -21,7 +21,7 @@ export default ListItem = ({data, goTo, userId, favorites, fetchFavorites}) => {
                 console.log(err)
             })
         } else {
-            axios.post(`${Constants.manifest.extra.apiUrl}/saveFavorites`, {
+            axios.post(`${config.apiUrl}/saveFavorites`, {
                 userId, 
                 movieId: data.id ? data.id : "", 
                 movieName: data.original_name ? data.original_name : "" , 
