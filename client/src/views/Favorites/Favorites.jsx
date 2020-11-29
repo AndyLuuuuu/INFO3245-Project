@@ -1,10 +1,22 @@
 import React, { useContext } from 'react'
 import { Container, FavoriteItem, FavoriteImage, FavoriteDetails, FavoriteTitle, NoFavoritesText } from './FavoritesStyled'
-import { Text } from 'react-native'
-import { SafeAreaView, FlatList, Dimensions, View } from 'react-native'
+import axios from 'axios'
+import { SafeAreaView, FlatList, Dimensions, View, TouchableOpacity } from 'react-native'
 import Constants from 'expo-constants';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const Favorite = ({favorite}) => {
+const unfavorite = (userId, movieId, fetchFavorites) => {
+    axios.post(`${Constants.manifest.extra.apiUrl}/deleteFavorites`, {
+        userId, 
+        movieId: movieId
+    }).then(res => {
+        fetchFavorites()
+    }).catch(err => {
+        console.log(err)
+    })
+}
+
+const Favorite = ({favorite, userId, fetchFavorites}) => {
     console.log(favorite)
     const {width, height} = Dimensions.get('window')
     return (
@@ -13,11 +25,17 @@ const Favorite = ({favorite}) => {
             <FavoriteDetails>
                 <FavoriteTitle>{favorite.movie_name}</FavoriteTitle>
             </FavoriteDetails>
+            <TouchableOpacity 
+                onPress={() => unfavorite(userId, favorite.movie_id, fetchFavorites)}
+                style={{flex:1, alignItems:'flex-end', marginRight:10}}
+            >
+                <MaterialIcons name="favorite" size={30} color="red" />
+            </TouchableOpacity>
         </FavoriteItem>
     )
 }
 
-export default function Favorites({favorites}) {
+export default function Favorites({favorites, userId, fetchFavorites}) {
     console.log(favorites)
     return (
         <SafeAreaView style={{flex: 1, marginTop: Constants.statusBarHeight}}>
@@ -25,7 +43,7 @@ export default function Favorites({favorites}) {
                 <FlatList
                     ItemSeparatorComponent={() => <View style={{height: 1, width: "100%", backgroundColor: "rgba(0,0,0,0.2)"}}/>}
                     data={favorites}
-                    renderItem={(item) => <Favorite favorite={item.item}/>}
+                    renderItem={(item) => <Favorite favorite={item.item} userId={userId} fetchFavorites={fetchFavorites}/>}
                     keyExtractor={item => item.id.toString()}
                 />
                 :

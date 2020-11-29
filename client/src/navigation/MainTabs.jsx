@@ -61,7 +61,7 @@ const Tabs = ({user}) => {
             inactiveTintColor: 'gray',
         }}
         >
-        <MainTabs.Screen name="Favorites" children={() => <FavoritesScreen favorites={favorites} fetchFavorites={fetchFavorites}/> }/>
+        <MainTabs.Screen name="Favorites" children={() => <FavoritesScreen favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/> }/>
         <MainTabs.Screen name="Discover TV" children={() => <DiscoverScreen type="tv" favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/>}/>
         <MainTabs.Screen name="Discover Movies" children={() => <DiscoverScreen type="movie" favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/> }/>
         <MainTabs.Screen name="Search" children={() => <SearchScreen favorites={favorites} fetchFavorites={fetchFavorites} userId={userId}/>}/>
