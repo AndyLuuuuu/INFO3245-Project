@@ -24,7 +24,7 @@ export default ListItem = ({data, goTo, userId, favorites, fetchFavorites}) => {
             axios.post(`${Constants.manifest.extra.apiUrl}/saveFavorites`, {
                 userId, 
                 movieId: data.id ? data.id : "", 
-                movieName: data.original_name ? data.original_name : "" , 
+                movieName: data.original_name ? data.original_name : data.original_title , 
                 posterUrl: data.poster_path ? data.poster_path : ""
             }).then(res => {
                 fetchFavorites()
